@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Snake Escape - True Slither Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen active">
+            <div class="glass-panel text-center">
+                <h1>SNAKE <span>ESCAPE</span></h1>
+                <p class="subtitle" style="color: #f1c40f;">un-knot the snakes</p>
+                
+                <div class="level-selection">
+                    <h3>Level wählen:</h3>
+                    <div class="level-selector">
+                        <button class="btn-icon btn-large" onclick="changeLevel(-1)">➖</button>
+                        <div class="level-display">
+                            <span id="level-number-display">1</span>
+                        </div>
+                        <button class="btn-icon btn-large" onclick="changeLevel(1)">➕</button>
+                    </div>
+                    <p id="lock-warning" class="warning-text" style="opacity: 0;">Level noch gesperrt!</p>
+                    
+                    <button class="btn btn-primary" onclick="startSelectedLevel()" style="margin-top: 10px; width: 100%; font-size: 1.2rem; padding: 15px;">▶️ Spielen</button>
+                    <button class="btn btn-secondary" onclick="startAutoPlay()" style="margin-top: 10px; width: 100%; font-size: 1rem; padding: 10px; border-color: var(--snake-blue); color: var(--snake-blue);">🍿 Demo- & Chillmode</button>
+                </div>
+                
+                <button class="btn btn-info-main" style="margin-top: 20px;" onclick="openInfoModal()">ℹ️ Spielregeln</button>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen">
+            <header class="hud">
+                <button class="btn-icon" onclick="goHome()" title="Beenden">🏠</button>
+                <div class="hud-center">
+                    <h2 id="current-level-title">Level 1</h2>
+                    <div id="lives-container" class="lives-display">
+                        <!-- Hearts injected by JS -->
+                    </div>
+                </div>
+                <div class="right-hud">
+                    <button class="btn-icon" onclick="restartLevel()" title="Level Neu Starten">🔄</button>
+                    <button class="btn-icon" onclick="openInfoModal()" title="Info">ℹ️</button>
+                </div>
+            </header>
+            
+            <main class="game-container">
+                <div id="board-wrapper">
+                    <div id="grid-bg"></div>
+                    <svg id="game-svg" width="100%" height="100%">
+                    <!-- SVG content dynamically generated -->
+                    <g id="grid-layer"></g>
+                    <g id="obstacles-layer"></g>
+                    <g id="portals-layer"></g>
+                    <g id="snakes-layer"></g>
+                </svg>
+                </div>
+            </main>
+        </div>
+
+        <!-- Info Modal -->
+        <div id="info-modal" class="modal">
+            <div class="modal-content glass-panel">
+                <button class="close-btn" onclick="closeInfoModal()">×</button>
+                <h2>Spielregeln</h2>
+                <div class="rules-content">
+                    <p>🐍 <strong>Das Ziel:</strong> Klicke auf die Schlangenköpfe, damit sie sich aus dem Dschungel schlängeln. Entwirre das Chaos!</p>
+                    <p>🚧 <strong>Die Regeln:</strong> Eine Schlange kann sich nur auf den Weg machen, wenn die gerade Linie von ihrem Kopf bis zum Spielfeldrand <strong>komplett frei</strong> von anderen Schlangenkörpern ist.</p>
+                    <hr>
+                    <h3>Features:</h3>
+                    <ul>
+                        <li>❤️ <strong>Leben:</strong> Du hast eine begrenzte Anzahl an Leben pro Level. Klickst du eine blockierte Schlange an, verlierst du ein Leben. Bei 0 Leben startet das Level neu!</li>
+                        <li>🪨 <strong>Felsen:</strong> In höheren Leveln tauchen Felsen auf, um die herum du planen musst.</li>
+                        <li>♾️ <strong>Endlos lösbar:</strong> Jedes Level wird dynamisch und garantiert lösbar generiert. Es gibt 99 Schwierigkeitsgrade!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Level Complete Modal -->
+        <div id="win-modal" class="modal">
+            <div class="modal-content glass-panel text-center">
+                <h2>Level Geschafft! 🎉</h2>
+                <p>Das Knäuel ist entwirrt.</p>
+                <div class="win-buttons">
+                    <button class="btn" onclick="restartLevel()">🔄 Neues Layout</button>
+                    <button class="btn btn-primary" id="next-level-btn" onclick="nextLevel()">Nächstes Level ➡️</button>
+                    <button class="btn btn-secondary" onclick="goHome()">🏠 Menü</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
