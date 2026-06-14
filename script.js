@@ -427,8 +427,6 @@ function generateRandomLevel(diff) {
             ex += dx; ey += dy;
         }
         
-        escapeRay.forEach(pt => grid[pt.x][pt.y] = false);
-        
         const len = Math.floor(Math.random() * 10) + 4; // Length 4 to 13 to fill the board
         let cx = head.x, cy = head.y;
         for(let step=1; step<len; step++) {
@@ -471,6 +469,9 @@ function generateRandomLevel(diff) {
             grid[next.x][next.y] = true;
             cx = next.x; cy = next.y;
         }
+        
+        // Free the escape ray so other snakes can use it, but THIS snake didn't block it!
+        escapeRay.forEach(pt => grid[pt.x][pt.y] = false);
         
         const usedColors = new Set();
         for (const other of generatedSnakes) {
