@@ -473,6 +473,11 @@ function generateRandomLevel(diff) {
         // Free the escape ray so other snakes can use it, but THIS snake didn't block it!
         escapeRay.forEach(pt => grid[pt.x][pt.y] = false);
         
+        if (body.length < 2) {
+            grid[head.x][head.y] = false;
+            continue;
+        }
+        
         const usedColors = new Set();
         for (const other of generatedSnakes) {
             let minDist = Infinity;
